@@ -37,10 +37,10 @@ public final class SizedLayoutCommand extends AbstractBukkitCommand {
                         .build()
                 )
 
-                .row(1, ItemLayout.of(Material.RED_STAINED_GLASS_PANE).build())
-                .row(3, ItemLayout.of(Material.GREEN_STAINED_GLASS_PANE).build())
-                .column(2, ItemLayout.of(Material.LIME_STAINED_GLASS_PANE).build())
-                .column(6, ItemLayout.of(Material.LIGHT_BLUE_STAINED_GLASS_PANE).build())
+                .row(1, ItemLayout.display(Material.RED_STAINED_GLASS_PANE))
+                .row(3, ItemLayout.display(Material.GREEN_STAINED_GLASS_PANE))
+                .column(2, ItemLayout.display(Material.LIME_STAINED_GLASS_PANE))
+                .column(6, ItemLayout.display(Material.LIGHT_BLUE_STAINED_GLASS_PANE))
 
                 .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
                         .cancelAllClicks(false)

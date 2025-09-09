@@ -25,12 +25,7 @@ public final class FixedLayoutCommand extends AbstractBukkitCommand {
                 .type(InventoryType.WORKBENCH)
                 .title(Component.text("This is a fixed example menu!", NamedTextColor.BLACK))
 
-                .fillAll(
-                        ItemLayout.of(Material.STONE)
-                                .material(Material.STONE)
-                                .build()
-                )
-
+                .fillAll(ItemLayout.display(Material.STONE))
                 .item(0,
                         ClickableItemLayout.of(Material.DIAMOND)
                                 .onLeftClick(clickContext -> clickContext.player().playSound(

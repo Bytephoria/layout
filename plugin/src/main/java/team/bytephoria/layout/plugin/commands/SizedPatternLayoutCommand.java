@@ -29,14 +29,8 @@ public final class SizedPatternLayoutCommand extends AbstractBukkitCommand {
                                 "",
                                 ""
                         )
-                        .key('A', ItemLayout.builder()
-                                .material(Material.NETHERITE_INGOT)
-                                .build()
-                        )
-                        .key('B', ItemLayout.builder()
-                                .material(Material.DIAMOND)
-                                .build()
-                        )
+                        .key('A', ItemLayout.display(Material.NETHERITE_INGOT))
+                        .key('B', ItemLayout.display(Material.DIAMOND))
                 )
 
                 .border(ItemLayout.display(Material.MAGENTA_STAINED_GLASS_PANE))
