@@ -14,7 +14,7 @@ final LayoutFixedInventory layoutFixedInventory = Layout.fixed()
         .title(Component.text("This is a fixed example menu!", NamedTextColor.BLACK))
 
         // Fill all slots with a specific item
-        .fillAll(ItemLayout.of(Material.STONE).build())
+        .fillAll(ItemLayout.display(Material.STONE))
 
         // Add a clickable item
         .item(0, ClickableItemLayout.of(Material.DIAMOND)
@@ -61,10 +61,10 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
         )
 
         // Fill specific rows and columns with items
-        .row(1, ItemLayout.of(Material.RED_STAINED_GLASS_PANE).build())
-        .row(3, ItemLayout.of(Material.GREEN_STAINED_GLASS_PANE).build())
-        .column(2, ItemLayout.of(Material.LIME_STAINED_GLASS_PANE).build())
-        .column(6, ItemLayout.of(Material.LIGHT_BLUE_STAINED_GLASS_PANE).build())
+        .row(1, ItemLayout.display(Material.RED_STAINED_GLASS_PANE))
+        .row(3, ItemLayout.display(Material.GREEN_STAINED_GLASS_PANE))
+        .column(2, ItemLayout.display(Material.LIME_STAINED_GLASS_PANE).buil)
+        .column(6, ItemLayout.display(Material.LIGHT_BLUE_STAINED_GLASS_PANE))
 
         // Define inventory behavior
         .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
@@ -99,14 +99,8 @@ final LayoutSizedInventory layoutPatternInventory = Layout.sized()
                         "",
                         ""
                 )
-                .key('A', ItemLayout.builder()
-                        .material(Material.NETHERITE_INGOT)
-                        .build()
-                )
-                .key('B', ItemLayout.builder()
-                        .material(Material.DIAMOND)
-                        .build()
-                )
+                .key('A', ItemLayout.display(Material.NETHERITE_INGOT))
+                .key('B', ItemLayout.display(Material.DIAMOND))
         )
 
         // Add a border around the pattern
