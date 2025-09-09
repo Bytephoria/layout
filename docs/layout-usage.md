@@ -36,7 +36,7 @@ layoutFixedInventory.open(player);
 
 ```
 
-<img src="images/fixed-example.png" height="300" alt="hola"/>
+<img src="images/fixed-example.png" height="336" alt="hola"/>
 
 
 ### Sized Inventories (`LayoutSizedInventory`)
@@ -81,7 +81,7 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
 
 layoutSizedInventory.open(player);
 ```
-<img src="images/sized-example.png" height="300" alt="hola"/>
+<img src="images/sized-example.png" height="407" alt="hola"/>
 
 
 ### Pattern-Based Inventories (`LayoutSizedInventory` only)
@@ -118,7 +118,7 @@ final LayoutSizedInventory layoutPatternInventory = Layout.sized()
 layoutPatternInventory.open(player);
 ```
 
-<img src="images/sized-pattern-example.png" height="300" alt="hola"/>
+<img src="images/sized-pattern-example.png" height="448" alt="hola"/>
 
 
 ### 💡 Notes:
