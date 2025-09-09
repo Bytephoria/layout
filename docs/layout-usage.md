@@ -35,6 +35,10 @@ final LayoutFixedInventory layoutFixedInventory = Layout.fixed()
 layoutFixedInventory.open(player);
 
 ```
+
+<img src="images/fixed-example.png" height="300" alt="hola"/>
+
+
 ### Sized Inventories (`LayoutSizedInventory`)
 Sized inventories resemble a chest interface where you can define the number of rows. They allow you to create flexible menus of varying sizes.
 ```java
@@ -77,6 +81,8 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
 
 layoutSizedInventory.open(player);
 ```
+<img src="images/sized-example.png" height="300" alt="hola"/>
+
 
 ### Pattern-Based Inventories (`LayoutSizedInventory` only)
 Pattern-based inventories allow creating visually structured menus using a character grid. This feature is exclusive to `LayoutSizedInventory`.
@@ -117,6 +123,9 @@ final LayoutSizedInventory layoutPatternInventory = Layout.sized()
 
 layoutPatternInventory.open(player);
 ```
+
+<img src="images/sized-pattern-example.png" height="300" alt="hola"/>
+
 
 ### 💡 Notes:
 - Click events are handled through ClickContext. The library does not perform automatic actions; you decide what happens on each click.
