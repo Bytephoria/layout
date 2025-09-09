@@ -33,7 +33,6 @@ public final class FixedLayoutCommand extends AbstractBukkitCommand {
 
                 .item(0,
                         ClickableItemLayout.of(Material.DIAMOND)
-                                .material(Material.STONE)
                                 .onLeftClick(clickContext -> clickContext.player().playSound(
                                         clickContext.player(), Sound.ENTITY_DONKEY_AMBIENT, 1f, 1f
                                 ))
