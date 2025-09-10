@@ -1,7 +1,3 @@
-plugins {
-    `java-library`
-}
-
 repositories {
     maven {
         name = "papermc"
@@ -14,5 +10,3 @@ dependencies {
     api(project(":common"))
     api(project(":item"))
 }
-
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))

@@ -1,5 +1,4 @@
 plugins {
-    id("java-library")
     id("com.gradleup.shadow") version ("9.1.0")
     id("de.eldoria.plugin-yml.paper") version ("0.8.0")
 }
@@ -14,6 +13,7 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     api(project(":layout"))
+    api(project(":item"))
 }
 
 paper {
@@ -27,9 +27,5 @@ paper {
 }
 
 tasks.shadowJar {
-    archiveBaseName.set(rootProject.name)
-    archiveVersion.set(rootProject.version.toString())
     archiveClassifier.set("")
 }
-
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
