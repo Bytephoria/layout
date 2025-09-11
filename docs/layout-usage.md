@@ -10,7 +10,8 @@ Fixed inventories have a predefined number of slots and a specific type, such as
 
 ```java
 final LayoutFixedInventory layoutFixedInventory = Layout.fixed()
-        .type(InventoryType.WORKBENCH)
+        // Only inventories listed in FixedInventoryType are allowed
+        .type(FixedInventoryType.WORKBENCH) // ← updated to use FixedInventoryType
         .title(Component.text("This is a fixed example menu!", NamedTextColor.BLACK))
 
         // Fill all slots with a specific item
