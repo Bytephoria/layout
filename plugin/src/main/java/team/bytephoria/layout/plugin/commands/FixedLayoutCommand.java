@@ -5,10 +5,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
 import team.bytephoria.layout.items.ClickableItemLayout;
 import team.bytephoria.layout.items.ItemLayout;
+import team.bytephoria.layout.layouts.FixedInventoryType;
 import team.bytephoria.layout.layouts.Layout;
 import team.bytephoria.layout.layouts.types.LayoutFixedInventory;
 import team.bytephoria.layout.plugin.commands.abstraction.AbstractBukkitCommand;
@@ -22,7 +22,7 @@ public final class FixedLayoutCommand extends AbstractBukkitCommand {
     @Override
     public void execute(final @NotNull Player player) {
         final LayoutFixedInventory layoutFixedInventory = Layout.fixed()
-                .type(InventoryType.WORKBENCH)
+                .type(FixedInventoryType.WORKBENCH)
                 .title(Component.text("This is a fixed example menu!", NamedTextColor.BLACK))
 
                 .fillAll(ItemLayout.display(Material.STONE))
