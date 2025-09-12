@@ -133,6 +133,67 @@ layoutSizedInventory.open(player);
 
 <img src="images/sized-pattern-example.png" height="448" alt="hola"/>
 
+### Sized Inventories with Skulls (`LayoutSizedInventory`)
+You can also use skulls to create player heads or custom textured heads in your layouts. This example demonstrates three different ways to display skulls: from a player, from a texture, or from a custom skin
+
+````java
+final LayoutSizedInventory layoutSizedInventory = Layout.sized()
+        .title(Component.text("This is a sized example menu!", NamedTextColor.BLACK))
+        .size(5)
+
+        // Skull from player
+        .item(21, new EmptyItemLayout(
+                SkullItem.builder()
+                        .player(player)
+                        .build()
+        ))
+
+        // Skull from texture
+        .item(22, ClickableItemLayout.builder()
+                .item(
+                        SkullItem.builder()
+                                .texture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI2OGRmMDJkMGViY2ZhMmI0YTc3NDVhNDllYzAwZWZkNDJmN2E3MGVmNzNmYjdlZmI2MTA1NDRjZjBjMTA4ZiJ9fX0=")
+                                .build()
+                )
+                .onLeftClick(inventoryClickContext -> 
+                        inventoryClickContext.player().sendMessage(Component.text("Left click!"))
+                )
+                .build()
+        )
+
+        // Skull from custom skin value
+        .item(23, EmptyItemLayout.builder()
+                .item(
+                        SkullItem.builder()
+                                .skin("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
+                                .build()
+                )
+                .build()
+        )
+
+        .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
+                .cancelAllClicks(false)
+                .cancelLayoutClicks(true)
+                .allowPlayerInventoryClicks(true)
+                .ignoreEmptySlots(true)
+                .onClick(context -> context.player().sendMessage("Click on inventory!"))
+                .onOpen(openContext ->
+                        openContext.player().playSound(
+                                openContext.player(), Sound.BLOCK_CHEST_OPEN, 1f, 1f
+                        )
+                )
+                .onClose(closeContext ->
+                        closeContext.player().playSound(
+                                closeContext.player(), Sound.BLOCK_CHEST_CLOSE, 1f, 1f
+                        )
+                )
+        )
+
+        .build();
+
+layoutSizedInventory.open(player);
+````
+<img src="images/sized-skull-example.png" height="412" alt="Skull example"/>
 
 ### 💡 Notes:
 - Click events are handled through ClickContext. The library does not perform automatic actions; you decide what happens on each click.
