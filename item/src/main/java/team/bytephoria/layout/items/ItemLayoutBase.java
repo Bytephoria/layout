@@ -52,7 +52,7 @@ public abstract class ItemLayoutBase implements Builder<ItemStack> {
     }
 
     @Override
-    public final @NotNull ItemStack build() {
+    public @NotNull ItemStack build() {
         final ItemStack itemStack = new ItemStack(this.material, this.amount);
         final ItemMeta itemMeta = itemStack.getItemMeta();
 
