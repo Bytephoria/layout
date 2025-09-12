@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.bytephoria.layout.common.Builder;
-import team.bytephoria.layout.items.ItemLayoutBase;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.base.InventoryHolderBase;
 import team.bytephoria.layout.layouts.behavior.LayoutBehavior;
 import team.bytephoria.layout.layouts.behavior.LayoutBehaviorBuilder;
@@ -18,7 +18,7 @@ public abstract class AbstractLayoutBuilder<B extends AbstractLayoutBuilder<B, O
 
     protected Component title;
 
-    protected Int2ObjectArrayMap<ItemLayoutBase> itemLayouts = new Int2ObjectArrayMap<>();
+    protected Int2ObjectArrayMap<ItemLayout> itemLayouts = new Int2ObjectArrayMap<>();
     protected LayoutBehavior layoutBehavior = LayoutBehavior.builder()
             .build();
 
@@ -29,12 +29,12 @@ public abstract class AbstractLayoutBuilder<B extends AbstractLayoutBuilder<B, O
         return self();
     }
 
-    public B item(final int slot, final @NotNull ItemLayoutBase itemLayout) {
+    public B item(final int slot, final @NotNull ItemLayout itemLayout) {
         this.itemLayouts.put(slot, itemLayout);
         return this.self();
     }
 
-    public B range(final int from, final int to, final @NotNull ItemLayoutBase itemLayout) {
+    public B range(final int from, final int to, final @NotNull ItemLayout itemLayout) {
         for (int index = from; index < to; index++) {
             this.itemLayouts.put(index, itemLayout);
         }
@@ -42,7 +42,7 @@ public abstract class AbstractLayoutBuilder<B extends AbstractLayoutBuilder<B, O
         return this.self();
     }
 
-    public abstract B fillAll(final @NotNull ItemLayoutBase itemLayoutBase);
+    public abstract B fillAll(final @NotNull ItemLayout itemLayoutBase);
 
     public B behavior(final @NotNull Consumer<LayoutBehaviorBuilder> layoutBehaviorBuilderConsumer) {
         final LayoutBehaviorBuilder behaviorBuilder = LayoutBehavior.builder();

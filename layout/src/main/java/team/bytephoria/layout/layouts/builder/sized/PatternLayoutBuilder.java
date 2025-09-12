@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import team.bytephoria.layout.common.Builder;
-import team.bytephoria.layout.items.ItemLayout;
+import team.bytephoria.layout.items.types.ItemLayout;
 
 import java.util.Arrays;
 

@@ -3,11 +3,11 @@ package team.bytephoria.layout.layouts.types;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
-import team.bytephoria.layout.items.ItemLayoutBase;
-import team.bytephoria.layout.layouts.builder.sized.SizedInventoryBuilder;
-import team.bytephoria.layout.layouts.editor.LayoutSizedEditor;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.base.LayoutInventoryBase;
 import team.bytephoria.layout.layouts.behavior.LayoutBehavior;
+import team.bytephoria.layout.layouts.builder.sized.SizedInventoryBuilder;
+import team.bytephoria.layout.layouts.editor.LayoutSizedEditor;
 
 public final class LayoutSizedInventory extends LayoutInventoryBase
         implements LayoutSizedEditor {
@@ -16,7 +16,7 @@ public final class LayoutSizedInventory extends LayoutInventoryBase
 
     public LayoutSizedInventory(
             final @NotNull LayoutBehavior layoutBehavior,
-            final @NotNull Int2ObjectArrayMap<ItemLayoutBase> itemLayouts,
+            final @NotNull Int2ObjectArrayMap<ItemLayout> itemLayouts,
             final @NotNull Component title,
             final int size
     ) {
@@ -28,14 +28,14 @@ public final class LayoutSizedInventory extends LayoutInventoryBase
     }
 
     @Override
-    public void column(final int column, final @NotNull ItemLayoutBase itemLayout) {
+    public void column(final int column, final @NotNull ItemLayout itemLayout) {
         for (int currentSlot = column; currentSlot < this.slots(); currentSlot += SLOTS_PER_ROW) {
             this.item(currentSlot, itemLayout);
         }
     }
 
     @Override
-    public void row(final int row, final @NotNull ItemLayoutBase itemLayout) {
+    public void row(final int row, final @NotNull ItemLayout itemLayout) {
         final int slotToStart = row * SLOTS_PER_ROW;
         final int slotToEnd = slotToStart + 8;
         for (int slot = slotToStart; slot <= slotToEnd; slot++) {
@@ -44,7 +44,7 @@ public final class LayoutSizedInventory extends LayoutInventoryBase
     }
 
     @Override
-    public void border(final @NotNull ItemLayoutBase itemLayout) {
+    public void border(final @NotNull ItemLayout itemLayout) {
         final int rows = this.slots() / SLOTS_PER_ROW;
 
         this.row(0, itemLayout);

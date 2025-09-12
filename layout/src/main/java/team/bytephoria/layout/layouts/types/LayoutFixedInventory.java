@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import team.bytephoria.layout.items.ItemLayoutBase;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.base.LayoutInventoryBase;
 import team.bytephoria.layout.layouts.behavior.LayoutBehavior;
 import team.bytephoria.layout.layouts.builder.FixedInventoryBuilder;
@@ -14,7 +14,7 @@ public final class LayoutFixedInventory extends LayoutInventoryBase {
 
     public LayoutFixedInventory(
             final @NotNull LayoutBehavior layoutBehavior,
-            final @NotNull Int2ObjectArrayMap<ItemLayoutBase> itemLayouts,
+            final @NotNull Int2ObjectArrayMap<ItemLayout> itemLayouts,
             final @NotNull InventoryType inventoryType,
             final @NotNull Component title
     ) {

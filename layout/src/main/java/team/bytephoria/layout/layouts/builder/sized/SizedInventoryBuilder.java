@@ -1,7 +1,7 @@
 package team.bytephoria.layout.layouts.builder.sized;
 
 import org.jetbrains.annotations.NotNull;
-import team.bytephoria.layout.items.ItemLayoutBase;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.base.InventoryHolderBase;
 import team.bytephoria.layout.layouts.builder.AbstractLayoutBuilder;
 
@@ -36,50 +36,50 @@ public abstract class SizedInventoryBuilder<B extends AbstractLayoutBuilder<B, O
         return this.self();
     }
 
-    public B fill(final @NotNull ItemLayoutBase itemLayoutBase, final int @NotNull ... slots) {
+    public B fill(final @NotNull ItemLayout itemLayout, final int @NotNull ... slots) {
         for (final int slot : slots) {
-            this.item(slot, itemLayoutBase);
+            this.item(slot, itemLayout);
         }
 
         return this.self();
     }
 
     @Override
-    public B fillAll(final @NotNull ItemLayoutBase itemLayoutBase) {
+    public B fillAll(final @NotNull ItemLayout itemLayout) {
         for (int slot = 0; slot < this.size; slot++) {
-            this.item(slot, itemLayoutBase);
+            this.item(slot, itemLayout);
         }
 
         return this.self();
     }
 
-    public B column(final int column, final @NotNull ItemLayoutBase itemLayoutBase) {
+    public B column(final int column, final @NotNull ItemLayout itemLayout) {
         for (int currentSlot = column; currentSlot < this.size; currentSlot += SLOTS_PER_ROW) {
-            this.item(currentSlot, itemLayoutBase);
+            this.item(currentSlot, itemLayout);
         }
 
         return this.self();
     }
 
-    public B border(final @NotNull ItemLayoutBase itemLayoutBase) {
+    public B border(final @NotNull ItemLayout itemLayout) {
         final int rows = this.size / SLOTS_PER_ROW;
 
-        this.row(0, itemLayoutBase);
-        this.row(rows - 1, itemLayoutBase);
+        this.row(0, itemLayout);
+        this.row(rows - 1, itemLayout);
 
         for (int row = 1; row < rows - 1; row++) {
-            this.column(row * SLOTS_PER_ROW, itemLayoutBase);
-            this.column(row * SLOTS_PER_ROW + (SLOTS_PER_ROW - 1), itemLayoutBase);
+            this.column(row * SLOTS_PER_ROW, itemLayout);
+            this.column(row * SLOTS_PER_ROW + (SLOTS_PER_ROW - 1), itemLayout);
         }
 
         return this.self();
     }
 
-    public B row(final int row, final @NotNull ItemLayoutBase itemLayoutBase) {
+    public B row(final int row, final @NotNull ItemLayout itemLayout) {
         final int slotToStart = row * SLOTS_PER_ROW;
         final int slotToEnd = Math.min(slotToStart + 8, this.size - 1);
         for (int slot = slotToStart; slot <= slotToEnd; slot++) {
-            this.item(slot, itemLayoutBase);
+            this.item(slot, itemLayout);
         }
 
         return this.self();

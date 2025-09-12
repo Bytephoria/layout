@@ -12,23 +12,23 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import team.bytephoria.layout.items.Executable;
-import team.bytephoria.layout.items.ItemLayoutBase;
 import team.bytephoria.layout.items.context.InventoryClickContext;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.InventoryListener;
 import team.bytephoria.layout.layouts.Layout;
+import team.bytephoria.layout.layouts.behavior.LayoutBehavior;
 import team.bytephoria.layout.layouts.context.InventoryCloseContext;
 import team.bytephoria.layout.layouts.context.InventoryOpenContext;
-import team.bytephoria.layout.layouts.behavior.LayoutBehavior;
 
 public class LayoutInventoryBase extends InventoryHolderBase
         implements Layout, InventoryListener {
 
-    protected final Int2ObjectArrayMap<ItemLayoutBase> itemLayouts;
+    protected final Int2ObjectArrayMap<ItemLayout> itemLayouts;
     protected final LayoutBehavior layoutBehavior;
 
     protected LayoutInventoryBase(
             final @NotNull LayoutBehavior layoutBehavior,
-            final @NotNull Int2ObjectArrayMap<ItemLayoutBase> itemLayouts,
+            final @NotNull Int2ObjectArrayMap<ItemLayout> itemLayouts,
             final @NotNull Component title,
             int size
     ) {
@@ -39,7 +39,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     protected LayoutInventoryBase(
             final @NotNull LayoutBehavior layoutBehavior,
-            final @NotNull Int2ObjectArrayMap<ItemLayoutBase> itemLayouts,
+            final @NotNull Int2ObjectArrayMap<ItemLayout> itemLayouts,
             final @NotNull InventoryType type,
             final @NotNull Component title
     ) {
@@ -90,8 +90,8 @@ public class LayoutInventoryBase extends InventoryHolderBase
         );
 
         final int clickedSlot = clickEvent.getSlot();
-        final ItemLayoutBase itemLayoutBase = this.itemLayouts.get(clickedSlot);
-        if (itemLayoutBase instanceof Executable executable) {
+        final ItemLayout itemLayout = this.itemLayouts.get(clickedSlot);
+        if (itemLayout instanceof Executable executable) {
             executable.execute(inventoryClickContext);
         }
 
@@ -119,21 +119,21 @@ public class LayoutInventoryBase extends InventoryHolderBase
     }
 
     @Override
-    public void item(final int slot, final @NotNull ItemLayoutBase itemLayout) {
-        this.item(slot, itemLayout.build());
+    public void item(final int slot, final @NotNull ItemLayout itemLayout) {
+        this.item(slot, itemLayout.itemLayoutBase().build());
     }
 
     @Override
-    public void fill(final @NotNull ItemLayoutBase itemLayout) {
-        final ItemStack itemStack = itemLayout.build();
+    public void fill(final @NotNull ItemLayout itemLayout) {
+        final ItemStack itemStack = itemLayout.itemLayoutBase().build();
         for (int slot = 0; slot < super.slots(); slot++) {
             this.item(slot, itemStack);
         }
     }
 
     @Override
-    public void fillRange(final int from, final int to, final @NotNull ItemLayoutBase itemLayout) {
-        final ItemStack itemStack = itemLayout.build();
+    public void fillRange(final int from, final int to, final @NotNull ItemLayout itemLayout) {
+        final ItemStack itemStack = itemLayout.itemLayoutBase().build();
         for (int slot = from; slot < to; slot++) {
             this.item(slot, itemStack);
         }
@@ -141,9 +141,9 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     @Override
     public void update(final int slot) {
-        final ItemLayoutBase itemLayoutBase = this.itemLayouts.get(slot);
-        if (itemLayoutBase != null) {
-            this.item(slot, itemLayoutBase.build());
+        final ItemLayout itemLayout = this.itemLayouts.get(slot);
+        if (itemLayout != null) {
+            this.item(slot, itemLayout.itemLayoutBase().build());
         }
     }
 

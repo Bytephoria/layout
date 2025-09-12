@@ -2,7 +2,7 @@ package team.bytephoria.layout.layouts.builder;
 
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
-import team.bytephoria.layout.items.ItemLayoutBase;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.FixedInventoryType;
 import team.bytephoria.layout.layouts.base.InventoryHolderBase;
 
@@ -17,7 +17,7 @@ public abstract class FixedInventoryBuilder<B extends AbstractLayoutBuilder<B, O
     }
 
     @Override
-    public B fillAll(final @NotNull ItemLayoutBase itemLayoutBase) {
+    public B fillAll(final @NotNull ItemLayout itemLayoutBase) {
         for (int slot = 0; slot < this.type.getDefaultSize(); slot++) {
             this.item(slot, itemLayoutBase);
         }
