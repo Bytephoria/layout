@@ -1,38 +1,50 @@
 # Item Usage Examples
-Items in Layout inventories are highly customizable and interactive. The library provides two main types: ItemLayout and ClickableItemLayout.
+Items in Layout inventories are highly customizable and interactive.  
+There are **two main layout types**: **EmptyItemLayout** (for display) and **ClickableItemLayout** (for interaction).  
+Both layouts require an **item implementation** (such as `MaterialItem`) that defines the item's appearance.
 
 ---
 
-### Basic Item (`ItemLayout`)
+### Basic Display Item (`EmptyItemLayout`)
 
-`ItemLayout` is used to create static items for an inventory. It's only for display purposes, defining the item's material, a custom name, and descriptive lore without adding any interactive behavior. It handles the item's appearance, not its actions.
+`EmptyItemLayout` is a wrapper that displays an item in the inventory with **no click actions**.  
+You can pass any implementation of `ItemLayoutBase` (e.g., `MaterialItem`) to it.
 
 ```java
-final ItemLayout stoneItem = ItemLayout.builder()
-        .material(Material.STONE)
-        .displayName(Component.text("Basic Stone", NamedTextColor.GRAY))
-        .lore(
-                Component.text("This is a stone", NamedTextColor.DARK_GRAY),
-                Component.text("Static item example", NamedTextColor.GRAY)
+final EmptyItemLayout emptyItemLayout = EmptyItemLayout.display(
+        MaterialItem.builder()
+                .material(Material.STONE)
+                .displayName(Component.text("Basic Stone", NamedTextColor.GRAY))
+                .lore(
+                        Component.text("This is a stone", NamedTextColor.DARK_GRAY),
+                        Component.text("Static item example", NamedTextColor.GRAY)
+                )
+                .build()
+);
+```
+
+- **MaterialItem**: Defines the material, amount, name, and lore.
+- **EmptyItemLayout**: Wraps the item for display without interactions
+
+---
+### Interactive Item (`ClickableItemLayout`)
+`ClickableItemLayout` allows you to make an item respond to clicks.
+It still requires an `ItemLayoutBase` implementation (like `MaterialItem`) to define its appearance.
+
+````java
+final ClickableItemLayout clickableItemLayout = ClickableItemLayout.builder()
+        .item(
+                MaterialItem.builder()
+                        .material(Material.DIAMOND_SWORD)
+                        .displayName(Component.text("Epic Sword", NamedTextColor.AQUA))
+                        .lore(Component.text("An interactive sword!", NamedTextColor.GRAY))
+                        .build()
         )
+        .onLeftClick(ctx -> ctx.player().sendMessage("Left click!"))
+        .onRightClick(ctx -> ctx.player().sendMessage("Right click!"))
+        .onMiddleClick(ctx -> ctx.player().sendMessage("Middle click!"))
         .build();
-
-```
-
-- Material: The item type in Minecraft (e.g., STONE, DIAMOND).
-- Display Name: The custom name shown to the player.
-- Lore: Additional descriptive lines below the name.
-
-### Clickable Item (`ClickableItemLayout`)
-ClickableItemLayout extends ItemLayout with click handlers using ClickContext. You can define actions for left, right, or middle clicks.
-```java
-final ClickableItemLayout clickableItem = ClickableItemLayout.builder()
-        .material(Material.DIAMOND_SWORD)
-        .displayName(Component.text("Epic Sword", NamedTextColor.AQUA))
-        .onLeftClick(clickContext -> clickContext.player().sendMessage("Left click!"))
-        .onRightClick(clickContext -> clickContext.player().sendMessage("Right click!"))
-        .onMiddleClick(clickContext -> clickContext.player().sendMessage("Middle click!"))
-        .build();
-```
-- Click Handlers: Implement logic using the ClickContext. The library does not execute commands or play sounds automatically.
-- Slot Assignment: Items are assigned to slots using the inventory builder (.item(slot, itemLayout)).
+````
+- **Click Handlers**: Define custom behavior for each click type.
+- **Appearance Decoupled**: The item look is still provided by MaterialItem (or other implementations).
+- **Usage**: Add to an inventory using .item(slot, clickableItem) in your inventory builder.
