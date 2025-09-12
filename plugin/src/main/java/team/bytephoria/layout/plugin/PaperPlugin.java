@@ -10,4 +10,5 @@ public final class PaperPlugin extends JavaPlugin {
         // Initialize the Layout library (required for the library to work properly)
         Layout.init(this);
     }
+
 }

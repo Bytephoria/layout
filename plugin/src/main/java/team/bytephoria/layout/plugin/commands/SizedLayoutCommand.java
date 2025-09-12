@@ -6,8 +6,11 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import team.bytephoria.layout.items.ClickableItemLayout;
-import team.bytephoria.layout.items.ItemLayout;
+import team.bytephoria.layout.items.base.MaterialItem;
+import team.bytephoria.layout.items.base.builder.MaterialItemBuilder;
+import team.bytephoria.layout.items.base.builder.SkullItemBuilder;
+import team.bytephoria.layout.items.types.ClickableItemLayout;
+import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.Layout;
 import team.bytephoria.layout.layouts.types.LayoutSizedInventory;
 import team.bytephoria.layout.plugin.commands.abstraction.AbstractBukkitCommand;
@@ -25,11 +28,15 @@ public final class SizedLayoutCommand extends AbstractBukkitCommand {
                 .size(5)
 
                 .item(22, ClickableItemLayout.builder()
-                        .material(Material.NETHERITE_PICKAXE)
-                        .displayName(Component.text("Netherite Pickaxe", NamedTextColor.GREEN))
-                        .lore(
-                                Component.text("Line 1", NamedTextColor.GREEN),
-                                Component.text("Line 2", NamedTextColor.LIGHT_PURPLE)
+                        .item(
+                                new MaterialItemBuilder()
+                                        .material(Material.NETHERITE_PICKAXE)
+                                        .displayName(Component.text("Netherite Pickaxe", NamedTextColor.GREEN))
+                                        .lore(
+                                                Component.text("Line 1", NamedTextColor.GREEN),
+                                                Component.text("Line 2", NamedTextColor.LIGHT_PURPLE)
+                                        )
+                                        .build()
                         )
                         .onLeftClick(clickContext -> clickContext.player().sendMessage("left click!"))
                         .onRightClick(clickContext -> clickContext.player().sendMessage("right click!"))
@@ -37,10 +44,31 @@ public final class SizedLayoutCommand extends AbstractBukkitCommand {
                         .build()
                 )
 
-                .row(1, ItemLayout.display(Material.RED_STAINED_GLASS_PANE))
-                .row(3, ItemLayout.display(Material.GREEN_STAINED_GLASS_PANE))
-                .column(2, ItemLayout.display(Material.LIME_STAINED_GLASS_PANE))
-                .column(6, ItemLayout.display(Material.LIGHT_BLUE_STAINED_GLASS_PANE))
+                .item(21, new ItemLayout(
+                                new SkullItemBuilder()
+                                        .player(player)
+                                        .build()
+                        )
+                )
+
+                .item(23, new ItemLayout(
+                                new SkullItemBuilder()
+                                        .texture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI2OGRmMDJkMGViY2ZhMmI0YTc3NDVhNDllYzAwZWZkNDJmN2E3MGVmNzNmYjdlZmI2MTA1NDRjZjBjMTA4ZiJ9fX0=")
+                                        .build()
+                        )
+                )
+
+                .item(25, new ItemLayout(
+                                new SkullItemBuilder()
+                                        .skin("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
+                                        .build()
+                        )
+                )
+
+                .row(1, new ItemLayout(new MaterialItem(Material.RED_STAINED_GLASS_PANE)))
+                .row(3, new ItemLayout(new MaterialItem(Material.GREEN_STAINED_GLASS_PANE)))
+                .column(2, new ItemLayout(new MaterialItem(Material.LIME_STAINED_GLASS_PANE)))
+                .column(6, new ItemLayout(new MaterialItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE)))
 
                 .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
                         .cancelAllClicks(false)

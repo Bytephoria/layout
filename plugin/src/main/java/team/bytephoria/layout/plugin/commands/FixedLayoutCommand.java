@@ -3,11 +3,11 @@ package team.bytephoria.layout.plugin.commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import team.bytephoria.layout.items.ClickableItemLayout;
-import team.bytephoria.layout.items.ItemLayout;
+import team.bytephoria.layout.items.base.MaterialItem;
+import team.bytephoria.layout.items.types.ClickableItemLayout;
+import team.bytephoria.layout.items.types.EmptyItemLayout;
 import team.bytephoria.layout.layouts.FixedInventoryType;
 import team.bytephoria.layout.layouts.Layout;
 import team.bytephoria.layout.layouts.types.LayoutFixedInventory;
@@ -25,13 +25,22 @@ public final class FixedLayoutCommand extends AbstractBukkitCommand {
                 .type(FixedInventoryType.WORKBENCH)
                 .title(Component.text("This is a fixed example menu!", NamedTextColor.BLACK))
 
-                .fillAll(ItemLayout.display(Material.STONE))
-                .item(0,
-                        ClickableItemLayout.of(Material.DIAMOND)
-                                .onLeftClick(clickContext -> clickContext.player().playSound(
-                                        clickContext.player(), Sound.ENTITY_DONKEY_AMBIENT, 1f, 1f
-                                ))
+                .fillAll(EmptyItemLayout.display(
+                        MaterialItem.builder()
+                                .material(Material.STONE)
                                 .build()
+                ))
+                .item(0, ClickableItemLayout.builder()
+                        .item(
+                                MaterialItem.builder()
+                                        .material(Material.STONE)
+                                        .displayName(Component.text("This is a stone!"))
+                                        .lore(Component.text("Line 1", NamedTextColor.GREEN))
+                                        .build()
+                        )
+                        .onLeftClick(inventoryClickContext -> inventoryClickContext.player().sendMessage(Component.text("Left Click!")))
+                        .onRightClick(inventoryClickContext -> inventoryClickContext.player().sendMessage(Component.text("Right Click!")))
+                        .build()
                 )
 
                 .behavior(behaviorBuilder -> behaviorBuilder
@@ -45,4 +54,5 @@ public final class FixedLayoutCommand extends AbstractBukkitCommand {
         layoutFixedInventory.open(player);
         player.sendMessage(Component.text("The fixed inventory has been opened.", NamedTextColor.GREEN));
     }
+
 }
