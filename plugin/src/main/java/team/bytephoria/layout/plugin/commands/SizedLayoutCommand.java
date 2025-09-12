@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import team.bytephoria.layout.items.base.MaterialItem;
 import team.bytephoria.layout.items.base.builder.MaterialItemBuilder;
-import team.bytephoria.layout.items.base.builder.SkullItemBuilder;
 import team.bytephoria.layout.items.types.ClickableItemLayout;
 import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.Layout;
@@ -44,26 +43,6 @@ public final class SizedLayoutCommand extends AbstractBukkitCommand {
                         .build()
                 )
 
-                .item(21, new ItemLayout(
-                                new SkullItemBuilder()
-                                        .player(player)
-                                        .build()
-                        )
-                )
-
-                .item(23, new ItemLayout(
-                                new SkullItemBuilder()
-                                        .texture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI2OGRmMDJkMGViY2ZhMmI0YTc3NDVhNDllYzAwZWZkNDJmN2E3MGVmNzNmYjdlZmI2MTA1NDRjZjBjMTA4ZiJ9fX0=")
-                                        .build()
-                        )
-                )
-
-                .item(25, new ItemLayout(
-                                new SkullItemBuilder()
-                                        .skin("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
-                                        .build()
-                        )
-                )
 
                 .row(1, new ItemLayout(new MaterialItem(Material.RED_STAINED_GLASS_PANE)))
                 .row(3, new ItemLayout(new MaterialItem(Material.GREEN_STAINED_GLASS_PANE)))
