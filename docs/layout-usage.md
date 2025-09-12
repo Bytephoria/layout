@@ -10,31 +10,36 @@ Fixed inventories have a predefined number of slots and a specific type, such as
 
 ```java
 final LayoutFixedInventory layoutFixedInventory = Layout.fixed()
-        // Only inventories listed in FixedInventoryType are allowed
-        .type(FixedInventoryType.WORKBENCH) // ← updated to use FixedInventoryType
+        .type(FixedInventoryType.WORKBENCH)
         .title(Component.text("This is a fixed example menu!", NamedTextColor.BLACK))
 
-        // Fill all slots with a specific item
-        .fillAll(ItemLayout.display(Material.STONE))
-
-        // Add a clickable item
-        .item(0, ClickableItemLayout.of(Material.DIAMOND)
-                .onLeftClick(clickContext -> clickContext.player().sendMessage("Left click!"))
+        .fillAll(EmptyItemLayout.display(
+                MaterialItem.builder()
+                        .material(Material.STONE)
+                        .build()
+        ))
+        .item(0, ClickableItemLayout.builder()
+                .item(
+                        MaterialItem.builder()
+                                .material(Material.STONE)
+                                .displayName(Component.text("This is a stone!"))
+                                .lore(Component.text("Line 1", NamedTextColor.GREEN))
+                                .build()
+                )
+                .onLeftClick(inventoryClickContext -> inventoryClickContext.player().sendMessage(Component.text("Left Click!")))
+                .onRightClick(inventoryClickContext -> inventoryClickContext.player().sendMessage(Component.text("Right Click!")))
                 .build()
         )
 
-        // Define inventory behavior
         .behavior(behaviorBuilder -> behaviorBuilder
                 .closeOnClick(true)
-                .onClick(context -> context.player().sendMessage("Clicked on inventory!"))
-                .onClose(context -> context.player().sendMessage("Inventory closed!"))
+                .onClick(context -> context.player().sendMessage("Click on inventory!"))
+                .onClose(context -> context.player().sendMessage("Close inventory!"))
         )
 
         .build();
 
-// Open the inventory for the player
 layoutFixedInventory.open(player);
-
 ```
 
 <img src="images/fixed-example.png" height="336" alt="hola"/>
@@ -47,35 +52,45 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
         .title(Component.text("This is a sized example menu!", NamedTextColor.BLACK))
         .size(5)
 
-        // Add a clickable item with multiple click handlers
         .item(22, ClickableItemLayout.builder()
-                .material(Material.NETHERITE_PICKAXE)
-                .displayName(Component.text("Netherite Pickaxe", NamedTextColor.GREEN))
-                .lore(
-                        Component.text("Line 1", NamedTextColor.GREEN),
-                        Component.text("Line 2", NamedTextColor.LIGHT_PURPLE)
+                .item(
+                        new MaterialItemBuilder()
+                                .material(Material.NETHERITE_PICKAXE)
+                                .displayName(Component.text("Netherite Pickaxe", NamedTextColor.GREEN))
+                                .lore(
+                                        Component.text("Line 1", NamedTextColor.GREEN),
+                                        Component.text("Line 2", NamedTextColor.LIGHT_PURPLE)
+                                )
+                                .build()
                 )
-                .onLeftClick(clickContext -> clickContext.player().sendMessage("Left click!"))
-                .onRightClick(clickContext -> clickContext.player().sendMessage("Right click!"))
-                .onMiddleClick(clickContext -> clickContext.player().sendMessage("Middle click!"))
+                .onLeftClick(clickContext -> clickContext.player().sendMessage("left click!"))
+                .onRightClick(clickContext -> clickContext.player().sendMessage("right click!"))
+                .onMiddleClick(clickContext -> clickContext.player().sendMessage("middle click!"))
                 .build()
         )
 
-        // Fill specific rows and columns with items
-        .row(1, ItemLayout.display(Material.RED_STAINED_GLASS_PANE))
-        .row(3, ItemLayout.display(Material.GREEN_STAINED_GLASS_PANE))
-        .column(2, ItemLayout.display(Material.LIME_STAINED_GLASS_PANE).buil)
-        .column(6, ItemLayout.display(Material.LIGHT_BLUE_STAINED_GLASS_PANE))
 
-        // Define inventory behavior
+        .row(1, new ItemLayout(new MaterialItem(Material.RED_STAINED_GLASS_PANE)))
+        .row(3, new ItemLayout(new MaterialItem(Material.GREEN_STAINED_GLASS_PANE)))
+        .column(2, new ItemLayout(new MaterialItem(Material.LIME_STAINED_GLASS_PANE)))
+        .column(6, new ItemLayout(new MaterialItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE)))
+
         .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
                 .cancelAllClicks(false)
                 .cancelLayoutClicks(true)
                 .allowPlayerInventoryClicks(true)
                 .ignoreEmptySlots(true)
-                .onClick(context -> context.player().sendMessage("Clicked on inventory!"))
-                .onOpen(openContext -> openContext.player().sendMessage("Inventory opened!"))
-                .onClose(closeContext -> closeContext.player().sendMessage("Inventory closed!"))
+                .onClick(context -> context.player().sendMessage("Click on inventory!"))
+                .onOpen(openContext ->
+                        openContext.player().playSound(
+                                openContext.player(), Sound.BLOCK_CHEST_OPEN, 1f, 1f
+                        )
+                )
+                .onClose(closeContext ->
+                        closeContext.player().playSound(
+                                closeContext.player(), Sound.BLOCK_CHEST_CLOSE, 1f, 1f
+                        )
+                )
         )
 
         .build();
@@ -89,8 +104,8 @@ layoutSizedInventory.open(player);
 Pattern-based inventories allow creating visually structured menus using a character grid. This feature is exclusive to `LayoutSizedInventory`.
 
 ```java
-final LayoutSizedInventory layoutPatternInventory = Layout.sized()
-        .title(Component.text("Patterned inventory example", NamedTextColor.BLACK))
+final LayoutSizedInventory layoutSizedInventory = Layout.sized()
+        .title(Component.text("This is a sized pattern example menu!", NamedTextColor.BLACK))
         .patterned(patternBuilder -> patternBuilder
                 .pattern(
                         "",
@@ -100,23 +115,20 @@ final LayoutSizedInventory layoutPatternInventory = Layout.sized()
                         "",
                         ""
                 )
-                .key('A', ItemLayout.display(Material.NETHERITE_INGOT))
-                .key('B', ItemLayout.display(Material.DIAMOND))
+                .key('A', EmptyItemLayout.display(new MaterialItem(Material.NETHERITE_INGOT)))
+                .key('B', EmptyItemLayout.display(new MaterialItem(Material.DIAMOND)))
         )
 
-        // Add a border around the pattern
-        .border(ItemLayout.display(Material.MAGENTA_STAINED_GLASS_PANE))
-
-        // Define behavior
+        .border(EmptyItemLayout.display(new MaterialItem(Material.MAGENTA_STAINED_GLASS_PANE)))
         .behavior(behaviorBuilder -> behaviorBuilder
-                .onOpen(openContext -> openContext.player().sendMessage("Inventory opened"))
-                .onClose(context -> context.player().sendMessage("Inventory closed"))
-                .onClick(context -> context.player().sendMessage("Clicked on inventory"))
+                .onOpen(openContext -> openContext.player().sendMessage("Opened inventory"))
+                .onClose(context -> context.player().sendMessage("Closed Inventory!"))
+                .onClick(context -> context.player().sendMessage("Click on inventory!"))
         )
 
         .build();
 
-layoutPatternInventory.open(player);
+layoutSizedInventory.open(player);
 ```
 
 <img src="images/sized-pattern-example.png" height="448" alt="hola"/>
