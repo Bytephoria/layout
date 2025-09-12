@@ -27,5 +27,6 @@ paper {
 }
 
 tasks.shadowJar {
+    archiveBaseName.set("${rootProject.name}-${project.name}")
     archiveClassifier.set("")
 }
