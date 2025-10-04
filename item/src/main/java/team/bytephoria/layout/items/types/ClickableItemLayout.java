@@ -45,6 +45,18 @@ public class ClickableItemLayout extends ItemLayout implements Executable {
             return this.onClick(ItemClickType.MIDDLE, clickContextConsumer);
         }
 
+        public ItemBuilder onAnyClick(final @NotNull Consumer<InventoryClickContext> clickContextConsumer) {
+            return this.onClick(clickContextConsumer, ItemClickType.values());
+        }
+
+        public ItemBuilder onDoubleClick(final @NotNull Consumer<InventoryClickContext> clickContextConsumer) {
+            return this.onClick(ItemClickType.DOUBLE_CLICK, clickContextConsumer);
+        }
+
+        public ItemBuilder onNumberKey(final @NotNull Consumer<InventoryClickContext> clickContextConsumer) {
+            return this.onClick(ItemClickType.NUMBER_KEY, clickContextConsumer);
+        }
+
         public ItemBuilder onDropClick(final @NotNull Consumer<InventoryClickContext> clickContextConsumer) {
             return this.onClick(ItemClickType.DROP, clickContextConsumer);
         }
@@ -57,9 +69,21 @@ public class ClickableItemLayout extends ItemLayout implements Executable {
             return this.onClick(ItemClickType.RIGHT, clickContextConsumer);
         }
 
+        public ItemBuilder onClick(final @NotNull Consumer<InventoryClickContext> consumer, final @NotNull ItemClickType @NotNull ... itemClickTypes) {
+            return this.onClick(itemClickTypes, consumer);
+        }
+
+        public ItemBuilder onClick(final @NotNull ItemClickType @NotNull [] itemClickTypes, final @NotNull Consumer<InventoryClickContext> clickContextConsumer) {
+            for (final ItemClickType itemClickType : itemClickTypes) {
+                this.onClick(itemClickType, clickContextConsumer);
+            }
+
+            return this.self();
+        }
+
         public ItemBuilder onClick(final @NotNull ItemClickType itemClickType, @NotNull Consumer<InventoryClickContext> consumer) {
             this.clickActions.put(itemClickType, consumer);
-            return this;
+            return this.self();
         }
 
         @Override
