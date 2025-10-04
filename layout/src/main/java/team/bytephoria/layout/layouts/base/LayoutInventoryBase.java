@@ -71,11 +71,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         }
 
         final InventoryType inventoryType = clickedInventory.getType();
-        if (inventoryType == InventoryType.PLAYER) {
-            if (this.layoutBehavior.allowPlayerInventoryClicks()) {
-                return;
-            }
-
+        if (inventoryType == InventoryType.PLAYER && this.layoutBehavior.allowPlayerInventoryClicks()) {
             return;
         }
 
