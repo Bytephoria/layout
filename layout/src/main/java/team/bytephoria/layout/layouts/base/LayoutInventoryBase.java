@@ -91,11 +91,10 @@ public class LayoutInventoryBase extends InventoryHolderBase
             executable.execute(inventoryClickContext);
         }
 
+        this.layoutBehavior.onClick().accept(inventoryClickContext);
         if (this.layoutBehavior.closeOnClick()) {
             clickEvent.getWhoClicked().closeInventory();
         }
-
-        this.layoutBehavior.onClick().accept(inventoryClickContext);
     }
 
     @Override
