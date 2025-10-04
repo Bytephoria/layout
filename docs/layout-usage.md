@@ -144,7 +144,7 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
         // Skull from player
         .item(21, new EmptyItemLayout(
                 SkullItem.builder()
-                        .player(player)
+                        .fromPlayer(player)
                         .build()
         ))
 
@@ -152,7 +152,7 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
         .item(22, ClickableItemLayout.builder()
                 .item(
                         SkullItem.builder()
-                                .texture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI2OGRmMDJkMGViY2ZhMmI0YTc3NDVhNDllYzAwZWZkNDJmN2E3MGVmNzNmYjdlZmI2MTA1NDRjZjBjMTA4ZiJ9fX0=")
+                                .withTextureValue("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI2OGRmMDJkMGViY2ZhMmI0YTc3NDVhNDllYzAwZWZkNDJmN2E3MGVmNzNmYjdlZmI2MTA1NDRjZjBjMTA4ZiJ9fX0=")
                                 .build()
                 )
                 .onLeftClick(inventoryClickContext -> 
@@ -165,7 +165,7 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
         .item(23, EmptyItemLayout.builder()
                 .item(
                         SkullItem.builder()
-                                .skin("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
+                                .withSkinId("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
                                 .build()
                 )
                 .build()
