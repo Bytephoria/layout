@@ -1,5 +1,4 @@
 # Installation
-
 This guide explains how to add Bytephoria libraries to your project.
 
 ---
@@ -55,5 +54,34 @@ implementation("team.bytephoria.layout:item:1.0.0")
     <artifactId>item</artifactId>
     <version>1.0.0</version>
 </dependency>
+```
+
+---
+### ⚙️ Initialization (Required for layout)
+If you are using the layout module, you must initialize it before using any inventory layouts.
+This step registers the required internal listeners for handling inventory events such as click, open, and close.
+Call the following method once during your plugin’s startup (typically inside onEnable()):
+
+```java
+package team.bytephoria.layout.plugin;
+
+import org.bukkit.plugin.java.JavaPlugin;
+import team.bytephoria.layout.layouts.Layout;
+
+public final class PaperPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        // Initialize the Layout library (required for the library to work properly)
+        Layout.init(this);
+    }
+
+}
 
 ```
+###### 💡 The item module does not require initialization and can be used independently.`
+
+### ✅ Summary
+- Add the Bytephoria repository to your build system.
+- Include the desired dependencies (`layout` or `item`).
+- Call `Layout.init(plugin)` once if using the layout module.
