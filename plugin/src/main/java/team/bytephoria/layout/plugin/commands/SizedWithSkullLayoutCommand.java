@@ -29,7 +29,7 @@ public final class SizedWithSkullLayoutCommand extends AbstractBukkitCommand {
 
                 .item(21, new EmptyItemLayout(
                                 SkullItem.builder()
-                                        .player(player)
+                                        .fromPlayer(player)
                                         .build()
                         )
                 )
@@ -37,7 +37,7 @@ public final class SizedWithSkullLayoutCommand extends AbstractBukkitCommand {
                 .item(22, ClickableItemLayout.builder()
                         .item(
                                 SkullItem.builder()
-                                        .texture(TEXTURE)
+                                        .withTextureValue(TEXTURE)
                                         .build()
                         )
 
@@ -48,7 +48,7 @@ public final class SizedWithSkullLayoutCommand extends AbstractBukkitCommand {
                 .item(23, EmptyItemLayout.builder()
                         .item(
                                 SkullItem.builder()
-                                        .skin("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
+                                        .withSkinId("e609e36c6d6a631eb7b76b3eded9ccb37d2fea82031b50479be364bbd01e6340")
                                         .build()
                         )
                         .build()
