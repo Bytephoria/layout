@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import team.bytephoria.layout.common.Builder;
 import team.bytephoria.layout.items.context.InventoryClickContext;
+import team.bytephoria.layout.layouts.ItemLoadingStrategy;
 import team.bytephoria.layout.layouts.context.InventoryCloseContext;
 import team.bytephoria.layout.layouts.context.InventoryOpenContext;
 
@@ -16,6 +17,8 @@ public final class LayoutBehaviorBuilder implements Builder<LayoutBehavior> {
     private boolean cancelLayoutClicks = true;
     private boolean allowPlayerInventoryClicks = true;
     private boolean ignoreEmptySlotClicks = false;
+
+    private ItemLoadingStrategy itemLoadingStrategy = ItemLoadingStrategy.LAZY;
 
     private Consumer<InventoryOpenContext> onOpen = inventoryOpenContext -> {};
     private Consumer<InventoryCloseContext> onClose = inventoryCloseContext -> {};
@@ -46,6 +49,11 @@ public final class LayoutBehaviorBuilder implements Builder<LayoutBehavior> {
         return this;
     }
 
+    public LayoutBehaviorBuilder itemLoadingStrategy(final @NotNull ItemLoadingStrategy itemLoadingStrategy) {
+        this.itemLoadingStrategy = itemLoadingStrategy;
+        return this;
+    }
+
     public LayoutBehaviorBuilder onOpen(final @NotNull Consumer<InventoryOpenContext> consumer) {
         this.onOpen = consumer;
         return this;
@@ -69,6 +77,7 @@ public final class LayoutBehaviorBuilder implements Builder<LayoutBehavior> {
                 this.cancelLayoutClicks,
                 this.allowPlayerInventoryClicks,
                 this.ignoreEmptySlotClicks,
+                this.itemLoadingStrategy,
                 this.onOpen,
                 this.onClose,
                 this.onClick

@@ -15,6 +15,7 @@ import team.bytephoria.layout.items.Executable;
 import team.bytephoria.layout.items.context.InventoryClickContext;
 import team.bytephoria.layout.items.types.ItemLayout;
 import team.bytephoria.layout.layouts.InventoryListener;
+import team.bytephoria.layout.layouts.ItemLoadingStrategy;
 import team.bytephoria.layout.layouts.Layout;
 import team.bytephoria.layout.layouts.behavior.LayoutBehavior;
 import team.bytephoria.layout.layouts.context.InventoryCloseContext;
@@ -26,6 +27,8 @@ public class LayoutInventoryBase extends InventoryHolderBase
     protected final Int2ObjectArrayMap<ItemLayout> itemLayouts;
     protected final LayoutBehavior layoutBehavior;
 
+    protected boolean loaded = false;
+
     protected LayoutInventoryBase(
             final @NotNull LayoutBehavior layoutBehavior,
             final @NotNull Int2ObjectArrayMap<ItemLayout> itemLayouts,
@@ -35,7 +38,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         super(title, size);
         this.itemLayouts = itemLayouts;
         this.layoutBehavior = layoutBehavior;
-        this.populateInventory();
+        this.initItemLayoutsIfNeeded();
     }
 
     protected LayoutInventoryBase(
@@ -47,7 +50,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         super(type, title);
         this.itemLayouts = itemLayouts;
         this.layoutBehavior = layoutBehavior;
-        this.populateInventory();
+        this.initItemLayoutsIfNeeded();
     }
 
     @Override
@@ -101,6 +104,11 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     @Override
     public void onInventoryOpen(final @NotNull InventoryOpenEvent openEvent) {
+        if (!this.loaded && this.layoutBehavior.itemLoadingStrategy() == ItemLoadingStrategy.LAZY) {
+            this.loaded = true;
+            this.populateInventory();
+        }
+
         final Player player = (Player) openEvent.getPlayer();
         this.layoutBehavior.onOpen().accept(new InventoryOpenContext(player));
     }
@@ -109,6 +117,12 @@ public class LayoutInventoryBase extends InventoryHolderBase
     public void onInventoryClose(final @NotNull InventoryCloseEvent closeEvent) {
         final Player player = (Player) closeEvent.getPlayer();
         this.layoutBehavior.onClose().accept(new InventoryCloseContext(player, closeEvent.getReason()));
+    }
+
+    private void initItemLayoutsIfNeeded() {
+        if (this.layoutBehavior.itemLoadingStrategy() == ItemLoadingStrategy.INSTANT) {
+            this.populateInventory();
+        }
     }
 
     private void populateInventory() {
