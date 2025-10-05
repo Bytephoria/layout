@@ -21,6 +21,10 @@ public record LayoutBehavior(
         Consumer<InventoryClickContext> onClick
 ) {
 
+    public static @NotNull LayoutBehavior defaults() {
+        return builder().build();
+    }
+
     @Contract(" -> new")
     public static @NotNull LayoutBehaviorBuilder builder() {
         return new LayoutBehaviorBuilder();
