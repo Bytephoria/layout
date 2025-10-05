@@ -35,6 +35,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         super(title, size);
         this.itemLayouts = itemLayouts;
         this.layoutBehavior = layoutBehavior;
+        this.populateInventory();
     }
 
     protected LayoutInventoryBase(
@@ -46,6 +47,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         super(type, title);
         this.itemLayouts = itemLayouts;
         this.layoutBehavior = layoutBehavior;
+        this.populateInventory();
     }
 
     @Override
@@ -109,6 +111,10 @@ public class LayoutInventoryBase extends InventoryHolderBase
         this.layoutBehavior.onClose().accept(new InventoryCloseContext(player, closeEvent.getReason()));
     }
 
+    private void populateInventory() {
+        this.itemLayouts.forEach(this::item);
+    }
+
     private void item(final int slot, final @NotNull ItemStack itemStack) {
         this.getInventory().setItem(slot, itemStack);
     }
@@ -144,8 +150,6 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     @Override
     public void open(final @NotNull Player player) {
-        this.itemLayouts.forEach(this::item);
-
         player.openInventory(this.getInventory());
     }
 
