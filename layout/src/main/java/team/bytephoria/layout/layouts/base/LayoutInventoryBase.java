@@ -149,14 +149,15 @@ public class LayoutInventoryBase extends InventoryHolderBase
         player.openInventory(this.getInventory());
     }
 
-    public @NotNull LayoutBehavior layoutBehavior() {
-        return this.layoutBehavior;
-    }
-
     @Override
     public void open(final @NotNull Player @NotNull ... players) {
         for (final Player player : players) {
             player.openInventory(this.getInventory());
         }
     }
+
+    public @NotNull LayoutBehavior layoutBehavior() {
+        return this.layoutBehavior;
+    }
+
 }
