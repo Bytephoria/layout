@@ -3,11 +3,11 @@ package team.bytephoria.layout.items.base;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import team.bytephoria.layout.common.Builder;
+import team.bytephoria.layout.common.Transformer;
 
 import java.util.List;
 
-public abstract class Item implements Builder<ItemStack> {
+public abstract class Item implements Transformer<ItemStack> {
 
     protected final Component displayName;
     protected final List<Component> lore;

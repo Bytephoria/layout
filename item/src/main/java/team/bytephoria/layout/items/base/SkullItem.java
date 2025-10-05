@@ -54,7 +54,7 @@ public class SkullItem extends Item {
     }
 
     @Override
-    public ItemStack build() {
+    public ItemStack to() {
         final ItemStack itemStack = new ItemStack(this.material(), this.amount);
         final SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
 

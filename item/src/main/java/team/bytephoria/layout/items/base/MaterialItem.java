@@ -53,7 +53,7 @@ public class MaterialItem extends Item {
     }
 
     @Override
-    public ItemStack build() {
+    public ItemStack to() {
         final ItemStack itemStack = new ItemStack(this.material, 1);
         final ItemMeta itemMeta = itemStack.getItemMeta();
 
