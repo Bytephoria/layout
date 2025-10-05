@@ -19,8 +19,7 @@ public abstract class AbstractLayoutBuilder<B extends AbstractLayoutBuilder<B, O
     protected Component title;
 
     protected Int2ObjectArrayMap<ItemLayout> itemLayouts = new Int2ObjectArrayMap<>();
-    protected LayoutBehavior layoutBehavior = LayoutBehavior.builder()
-            .build();
+    protected LayoutBehavior layoutBehavior = LayoutBehavior.defaults();
 
     protected abstract B self();
 
@@ -47,8 +46,7 @@ public abstract class AbstractLayoutBuilder<B extends AbstractLayoutBuilder<B, O
     public B behavior(final @NotNull Consumer<LayoutBehaviorBuilder> layoutBehaviorBuilderConsumer) {
         final LayoutBehaviorBuilder behaviorBuilder = LayoutBehavior.builder();
         layoutBehaviorBuilderConsumer.accept(behaviorBuilder);
-        this.layoutBehavior = behaviorBuilder.build();
-        return this.self();
+        return this.behavior(behaviorBuilder.build());
     }
 
     public B editBehavior(final @NotNull Consumer<LayoutBehaviorBuilder> layoutBehaviorBuilderConsumer) {
@@ -62,12 +60,16 @@ public abstract class AbstractLayoutBuilder<B extends AbstractLayoutBuilder<B, O
                 .onClick(this.layoutBehavior.onClick());
 
         layoutBehaviorBuilderConsumer.accept(layoutBehaviorBuilder);
-        this.layoutBehavior = layoutBehaviorBuilder.build();
-        return this.self();
+        return this.behavior(layoutBehaviorBuilder.build());
     }
 
     public B behavior(final @NotNull Supplier<LayoutBehavior> layoutBehaviorBuilderSupplier) {
-        this.layoutBehavior = layoutBehaviorBuilderSupplier.get();
-        return self();
+        return this.behavior(layoutBehaviorBuilderSupplier.get());
     }
+
+    public B behavior(final @NotNull LayoutBehavior layoutBehavior) {
+        this.layoutBehavior = layoutBehavior;
+        return this.self();
+    }
+
 }
