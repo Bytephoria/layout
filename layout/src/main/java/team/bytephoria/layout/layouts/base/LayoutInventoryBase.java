@@ -135,12 +135,12 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     @Override
     public void item(final int slot, final @NotNull ItemLayout itemLayout) {
-        this.item(slot, itemLayout.itemLayoutBase().build());
+        this.item(slot, itemLayout.itemLayoutBase().to());
     }
 
     @Override
     public void fill(final @NotNull ItemLayout itemLayout) {
-        final ItemStack itemStack = itemLayout.itemLayoutBase().build();
+        final ItemStack itemStack = itemLayout.itemLayoutBase().to();
         for (int slot = 0; slot < super.slots(); slot++) {
             this.item(slot, itemStack);
         }
@@ -148,7 +148,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     @Override
     public void fillRange(final int from, final int to, final @NotNull ItemLayout itemLayout) {
-        final ItemStack itemStack = itemLayout.itemLayoutBase().build();
+        final ItemStack itemStack = itemLayout.itemLayoutBase().to();
         for (int slot = from; slot < to; slot++) {
             this.item(slot, itemStack);
         }
@@ -158,7 +158,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
     public void update(final int slot) {
         final ItemLayout itemLayout = this.itemLayouts.get(slot);
         if (itemLayout != null) {
-            this.item(slot, itemLayout.itemLayoutBase().build());
+            this.item(slot, itemLayout.itemLayoutBase().to());
         }
     }
 
