@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import team.bytephoria.layout.items.Executable;
 import team.bytephoria.layout.items.context.InventoryClickContext;
 import team.bytephoria.layout.items.types.ItemLayout;
@@ -27,7 +28,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
     protected final Int2ObjectArrayMap<ItemLayout> itemLayouts;
     protected final LayoutBehavior layoutBehavior;
 
-    protected boolean loaded = false;
+    protected boolean itemsLoaded = false;
 
     protected LayoutInventoryBase(
             final @NotNull LayoutBehavior layoutBehavior,
@@ -38,7 +39,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         super(title, size);
         this.itemLayouts = itemLayouts;
         this.layoutBehavior = layoutBehavior;
-        this.initItemLayoutsIfNeeded();
+        this.initializeItemsIfRequired();
     }
 
     protected LayoutInventoryBase(
@@ -50,7 +51,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
         super(type, title);
         this.itemLayouts = itemLayouts;
         this.layoutBehavior = layoutBehavior;
-        this.initItemLayoutsIfNeeded();
+        this.initializeItemsIfRequired();
     }
 
     @Override
@@ -59,11 +60,8 @@ public class LayoutInventoryBase extends InventoryHolderBase
         final ItemStack cursorItemStack = clickEvent.getCursor();
 
         // If clicked item is null and ignore empty slots is enabled:
-        if (currentItemStack == null && this.layoutBehavior.ignoreEmptySlots()) {
-            // If cursor item stack is null or is air
-            if (cursorItemStack == null || cursorItemStack.getType() == Material.AIR) {
-                return;
-            }
+        if (this.shouldIgnoreClick(currentItemStack, cursorItemStack)) {
+            return;
         }
 
         if (this.layoutBehavior.cancelAllClicks()) {
@@ -90,11 +88,7 @@ public class LayoutInventoryBase extends InventoryHolderBase
                 clickEvent
         );
 
-        final int clickedSlot = clickEvent.getSlot();
-        final ItemLayout itemLayout = this.itemLayouts.get(clickedSlot);
-        if (itemLayout instanceof Executable executable) {
-            executable.execute(inventoryClickContext);
-        }
+        this.handleClick(inventoryClickContext);
 
         this.layoutBehavior.onClick().accept(inventoryClickContext);
         if (this.layoutBehavior.closeOnClick()) {
@@ -104,9 +98,9 @@ public class LayoutInventoryBase extends InventoryHolderBase
 
     @Override
     public void onInventoryOpen(final @NotNull InventoryOpenEvent openEvent) {
-        if (!this.loaded && this.layoutBehavior.itemLoadingStrategy() == ItemLoadingStrategy.LAZY) {
-            this.loaded = true;
-            this.populateInventory();
+        if (!this.itemsLoaded && this.layoutBehavior.itemLoadingStrategy() == ItemLoadingStrategy.LAZY) {
+            this.renderItems();
+            this.markAsLoaded();
         }
 
         final Player player = (Player) openEvent.getPlayer();
@@ -119,23 +113,56 @@ public class LayoutInventoryBase extends InventoryHolderBase
         this.layoutBehavior.onClose().accept(new InventoryCloseContext(player, closeEvent.getReason()));
     }
 
-    private void initItemLayoutsIfNeeded() {
-        if (this.layoutBehavior.itemLoadingStrategy() == ItemLoadingStrategy.INSTANT) {
-            this.populateInventory();
+    protected void handleClick(final @NotNull InventoryClickContext inventoryClickContext) {
+        final int clickedSlot = inventoryClickContext.clickEvent().getSlot();
+        final ItemLayout itemLayout = this.itemLayouts.get(clickedSlot);
+        if (itemLayout instanceof Executable executable) {
+            executable.execute(inventoryClickContext);
         }
     }
 
-    private void populateInventory() {
+    private void initializeItemsIfRequired() {
+        if (this.layoutBehavior.itemLoadingStrategy() == ItemLoadingStrategy.INSTANT) {
+            this.renderItems();
+            this.itemsLoaded = true;
+        }
+    }
+
+    protected void renderItems() {
         this.itemLayouts.forEach(this::item);
     }
 
-    private void item(final int slot, final @NotNull ItemStack itemStack) {
+    private boolean shouldIgnoreClick(final @Nullable ItemStack current, final @Nullable ItemStack cursor) {
+        return current == null && this.layoutBehavior.ignoreEmptySlots() &&
+                (cursor == null || cursor.getType() == Material.AIR);
+    }
+
+    protected void markAsLoaded() {
+        this.itemsLoaded = true;
+    }
+
+    public boolean isItemsLoaded() {
+        return this.itemsLoaded;
+    }
+
+    public void setItem(final int slot, final @Nullable ItemLayout itemLayout) {
+        if (itemLayout == null) {
+            this.itemLayouts.remove(slot);
+            this.getInventory().setItem(slot, null);
+            return;
+        }
+
+        this.itemLayouts.put(slot, itemLayout);
+        this.item(slot, itemLayout.itemLayoutBase().to());
+    }
+
+    protected void item(final int slot, final @Nullable ItemStack itemStack) {
         this.getInventory().setItem(slot, itemStack);
     }
 
     @Override
-    public void item(final int slot, final @NotNull ItemLayout itemLayout) {
-        this.item(slot, itemLayout.itemLayoutBase().to());
+    public void item(final int slot, final @Nullable ItemLayout itemLayout) {
+        this.item(slot, itemLayout == null ? null : itemLayout.itemLayoutBase().to());
     }
 
     @Override
