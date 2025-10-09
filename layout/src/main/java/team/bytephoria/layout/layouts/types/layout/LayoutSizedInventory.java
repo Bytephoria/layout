@@ -1,4 +1,4 @@
-package team.bytephoria.layout.layouts.types;
+package team.bytephoria.layout.layouts.types.layout;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.kyori.adventure.text.Component;
