@@ -57,6 +57,10 @@ public class MaterialItem extends Item {
         final ItemStack itemStack = new ItemStack(this.material, 1);
         final ItemMeta itemMeta = itemStack.getItemMeta();
 
+        if (itemMeta == null) {
+            return itemStack;
+        }
+
         if (this.displayName != null) {
             itemMeta.displayName(this.displayName);
         }
