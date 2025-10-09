@@ -195,6 +195,63 @@ layoutSizedInventory.open(player);
 ````
 <img src="images/sized-skull-example.png" height="412" alt="Skull example"/>
 
+### Paged Inventories (`LayoutPagedInventory`)
+Paged inventories allow you to display a large number of items across multiple pages with automatic navigation controls (Next/Previous). They are ideal for shop menus, player lists, or any dynamic collection of items.
+
+````java
+final LayoutPagedInventory layoutPagedInventory = Layout.paged()
+        .title(Component.text("Paged Inventory"))
+        .size(6)
+
+        // Define the paginated area (where items will appear)
+        .range(bounds -> bounds
+                .start(rangeStart)     // First slot of the paginated area
+                .end(rangeEnd)         // Last slot of the paginated area
+                .compact()             // Compact items into a full rectangle (no gaps between rows)
+        )
+
+        // Add items to the pagination
+        .append(new EmptyItemLayout(new MaterialItem())) // Add a single item to the pagination
+        .extend(emptyItems)                              // Add multiple items at once to the pagination
+
+        // Fill all inventory slots (outside pagination) with a decorative background
+        .fillAll(new EmptyItemLayout(new MaterialItem(Material.BLACK_STAINED_GLASS_PANE)))
+
+        // Add a static clickable item (does not move between pages)
+        .item(49, ClickableItemLayout.builder()
+                .item(new MaterialItem(Material.RED_BED))
+                .onLeftClick(ctx -> ctx.player().closeInventory())
+                .build()
+        )
+
+        // Configure navigation buttons for page switching
+        .navigation(nav -> nav
+                .previous(45, new MaterialItem(Material.ARROW)) // Slot and item for "Previous" button
+                .next(53, new MaterialItem(Material.ARROW))     // Slot and item for "Next" button
+                .hideOnSinglePage()                             // Hide both buttons if there’s only one page
+                .hideOnFirstPage()                              // Hide "Previous" button on the first page
+                .hideOnLastPage()                               // Hide "Next" button on the last page
+        )
+
+        // Page configuration
+        //.pageSize(15)   // Optional: manually set number of items per page (auto-calculated if omitted)
+        //.page(0)        // Optional: starting page index (defaults to the first page)
+
+        // Define behavior and event handling
+        .behavior(behavior -> behavior
+                .itemLoadingStrategy(ItemLoadingStrategy.LAZY) // Load page items only when needed
+                .onOpen(ctx -> ctx.player().sendMessage("Opened!"))   // Event triggered when opened
+                .onClose(ctx -> ctx.player().sendMessage("Closed!"))  // Event triggered when closed
+                .onClick(ctx -> ctx.player().sendMessage("Click!"))   // Event triggered on click
+                .closeOnClick(false)                                 // Whether inventory closes after a click
+        )
+
+        .build();
+
+layoutPagedInventory.open(player);
+````
+<img src="images/paged-example.png" height="451" alt="Paged example"/>
+
 ### 💡 Notes:
 - Click events are handled through ClickContext. The library does not perform automatic actions; you decide what happens on each click.
 - Sounds, commands, or other effects must be implemented manually using the ClickContext or OpenContext/CloseContext.
