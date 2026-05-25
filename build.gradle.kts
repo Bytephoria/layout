@@ -4,8 +4,10 @@ plugins {
 }
 
 subprojects {
-    apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
+    apply {
+        plugin("java-library")
+        plugin("maven-publish")
+    }
 
     publishing {
         publications {
