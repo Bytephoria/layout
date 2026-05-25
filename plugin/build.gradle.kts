@@ -1,6 +1,6 @@
 plugins {
     id("com.gradleup.shadow") version ("9.4.1")
-    id("de.eldoria.plugin-yml.paper") version ("0.8.0")
+    id("de.eldoria.plugin-yml.paper") version ("0.9.0")
 }
 
 repositories {
