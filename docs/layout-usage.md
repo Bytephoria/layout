@@ -26,8 +26,8 @@ final LayoutFixedInventory layoutFixedInventory = Layout.fixed()
                                 .lore(Component.text("Line 1", NamedTextColor.GREEN))
                                 .build()
                 )
-                .onLeftClick(inventoryClickContext -> inventoryClickContext.player().sendMessage(Component.text("Left Click!")))
-                .onRightClick(inventoryClickContext -> inventoryClickContext.player().sendMessage(Component.text("Right Click!")))
+                .onLeftClick(clickContext -> clickContext.player().sendMessage(Component.text("Left Click!")))
+                .onRightClick(clickContext -> clickContext.player().sendMessage(Component.text("Right Click!")))
                 .build()
         )
 
@@ -75,7 +75,7 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
         .column(2, new ItemLayout(new MaterialItem(Material.LIME_STAINED_GLASS_PANE)))
         .column(6, new ItemLayout(new MaterialItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE)))
 
-        .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
+        .behavior(behaviorBuilder -> behaviorBuilder
                 .cancelAllClicks(false)
                 .cancelLayoutClicks(true)
                 .allowPlayerInventoryClicks(true)
@@ -155,8 +155,8 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
                                 .withTextureValue("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI2OGRmMDJkMGViY2ZhMmI0YTc3NDVhNDllYzAwZWZkNDJmN2E3MGVmNzNmYjdlZmI2MTA1NDRjZjBjMTA4ZiJ9fX0=")
                                 .build()
                 )
-                .onLeftClick(inventoryClickContext -> 
-                        inventoryClickContext.player().sendMessage(Component.text("Left click!"))
+                .onLeftClick(clickContext -> 
+                        clickContext.player().sendMessage(Component.text("Left click!"))
                 )
                 .build()
         )
@@ -171,7 +171,7 @@ final LayoutSizedInventory layoutSizedInventory = Layout.sized()
                 .build()
         )
 
-        .behavior(layoutBehaviorBuilder -> layoutBehaviorBuilder
+        .behavior(behaviorBuilder -> behaviorBuilder
                 .cancelAllClicks(false)
                 .cancelLayoutClicks(true)
                 .allowPlayerInventoryClicks(true)
@@ -239,7 +239,7 @@ final LayoutPagedInventory layoutPagedInventory = Layout.paged()
 
         // Define behavior and event handling
         .behavior(behavior -> behavior
-                .itemLoadingStrategy(ItemLoadingStrategy.LAZY) // Load page items only when needed
+                .loadingStrategy(ItemLoadingStrategy.LAZY) // Load page items only when needed
                 .onOpen(ctx -> ctx.player().sendMessage("Opened!"))   // Event triggered when opened
                 .onClose(ctx -> ctx.player().sendMessage("Closed!"))  // Event triggered when closed
                 .onClick(ctx -> ctx.player().sendMessage("Click!"))   // Event triggered on click

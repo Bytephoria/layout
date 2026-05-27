@@ -1,0 +1,5 @@
+name: LayoutExample
+version: '1.0.0'
+main: team.bytephoria.layout.example.ExamplePlugin
+api-version: '1.21'
+description: Example plugin demonstrating the layout library.
