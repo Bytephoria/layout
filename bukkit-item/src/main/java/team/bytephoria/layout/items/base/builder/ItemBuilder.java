@@ -9,8 +9,7 @@ import team.bytephoria.layout.items.base.Item;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ItemBuilder<B extends ItemBuilder<B, T>, T extends Item>
-        implements Builder<T> {
+public abstract class ItemBuilder<B extends ItemBuilder<B, T>, T extends Item> implements Builder<T> {
 
     protected Component displayName = null;
     protected List<Component> lore = null;

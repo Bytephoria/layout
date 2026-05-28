@@ -6,8 +6,7 @@ import team.bytephoria.layout.layouts.builder.AbstractLayoutBuilder;
 import team.bytephoria.nms.packet.render.PacketContainerType;
 import team.bytephoria.nms.packet.types.PacketFixedLayout;
 
-public final class PacketFixedLayoutBuilder
-        extends AbstractLayoutBuilder<PacketFixedLayoutBuilder, PacketFixedLayout> {
+public final class PacketFixedLayoutBuilder extends AbstractLayoutBuilder<PacketFixedLayoutBuilder, PacketFixedLayout> {
 
     private PacketContainerType containerType = PacketContainerType.BARREL;
 
