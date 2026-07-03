@@ -1,10 +1,3 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven("https://repo.papermc.io/repository/maven-public/")
-    }
-}
-
 rootProject.name = "layout"
 
 include(
@@ -13,6 +6,8 @@ include(
     "bukkit-item",
     "layout-api",
     "layout-bukkit",
-    "layout-nms",
+    "layout-nms-common",
+    "layout-nms-adapter-1_21_11",
+    "layout-nms-adapter-26_1",
     "example-plugin"
 )
