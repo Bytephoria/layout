@@ -132,6 +132,14 @@ public class LayoutInventoryBase extends InventoryHolderBase
         this.itemLayouts.forEach(this::item);
     }
 
+    public boolean isSlotTaken(final int slot) {
+        return this.itemLayouts.containsKey(slot);
+    }
+
+    public ItemLayout getItem(final int slot) {
+        return this.itemLayouts.get(slot);
+    }
+
     private boolean shouldIgnoreClick(final @Nullable ItemStack current, final @Nullable ItemStack cursor) {
         return current == null && this.layoutBehavior.ignoreEmptySlots() &&
                 (cursor == null || cursor.getType() == Material.AIR);

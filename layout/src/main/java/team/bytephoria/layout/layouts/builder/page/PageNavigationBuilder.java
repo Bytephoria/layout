@@ -4,7 +4,10 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import team.bytephoria.layout.common.Builder;
 import team.bytephoria.layout.items.base.Item;
+import team.bytephoria.layout.items.context.InventoryClickContext;
 import team.bytephoria.layout.layouts.types.paged.PagedNavigation;
+
+import java.util.function.Consumer;
 
 public final class PageNavigationBuilder implements Builder<PagedNavigation> {
 
@@ -15,8 +18,26 @@ public final class PageNavigationBuilder implements Builder<PagedNavigation> {
     private boolean hiddenOnFirstPage = false;
     private boolean hiddenOnLastPage = false;
 
+    public PageNavigationBuilder previous(
+            final int slot,
+            final @NotNull Item item,
+            final @NotNull Consumer<InventoryClickContext> onAnyClick
+    ) {
+        this.previousButton = new PagedNavigation.PagedNavigationItem(slot, item, onAnyClick);
+        return this;
+    }
+
     public PageNavigationBuilder previous(final int slot, final @NotNull Item item) {
         this.previousButton = new PagedNavigation.PagedNavigationItem(slot, item);
+        return this;
+    }
+
+    public PageNavigationBuilder next(
+            final int slot,
+            final @NotNull Item item,
+            final @NotNull Consumer<InventoryClickContext> onAnyClick
+    ) {
+        this.nextButton = new PagedNavigation.PagedNavigationItem(slot, item, onAnyClick);
         return this;
     }
 
@@ -25,17 +46,17 @@ public final class PageNavigationBuilder implements Builder<PagedNavigation> {
         return this;
     }
 
-    public PageNavigationBuilder hideOnSinglePage() {
+    public PageNavigationBuilder hideButtonsOnSinglePage() {
         this.hiddenOnSinglePage = true;
         return this;
     }
 
-    public PageNavigationBuilder hideOnFirstPage() {
+    public PageNavigationBuilder hidePreviousOnFirstPage() {
         this.hiddenOnFirstPage = true;
         return this;
     }
 
-    public PageNavigationBuilder hideOnLastPage() {
+    public PageNavigationBuilder hideNextOnLastPage() {
         this.hiddenOnLastPage = true;
         return this;
     }
