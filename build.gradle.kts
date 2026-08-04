@@ -13,22 +13,9 @@ subprojects {
         publications {
             create<MavenPublication>(project.name) {
                 from(components["java"])
-
-                groupId = "${project.group}.${rootProject.name}"
+                groupId = project.group.toString()
                 artifactId = project.name
                 version = rootProject.version.toString()
-            }
-        }
-
-        repositories {
-            maven {
-                name = "bytephoriaRepository"
-                url = uri("https://repo.bytephoria.team/releases")
-
-                credentials(PasswordCredentials::class)
-                authentication {
-                    create<BasicAuthentication>("basic")
-                }
             }
         }
     }
