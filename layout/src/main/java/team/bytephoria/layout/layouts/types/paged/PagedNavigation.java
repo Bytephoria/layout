@@ -55,7 +55,7 @@ public final class PagedNavigation {
     }
 
     public void render(final @NotNull LayoutPagedInventory layoutPagedInventory) {
-        if (layoutPagedInventory.totalPages() == 1 && this.hideWhenSinglePage) {
+        if (layoutPagedInventory.totalPages() <= 1 && this.hideWhenSinglePage) {
             return;
         }
 

@@ -32,7 +32,7 @@ public class LayoutPagedInventoryBuilder extends AbstractLayoutBuilder<LayoutPag
     }
 
     public LayoutPagedInventoryBuilder size(final int size) {
-        this.size = Math.max(1, Math.min(size, 6)) * 9;
+        this.size = Math.clamp(size, 1, 6) * 9;
         return this.self();
     }
 
@@ -99,8 +99,14 @@ public class LayoutPagedInventoryBuilder extends AbstractLayoutBuilder<LayoutPag
     @Override
     public LayoutPagedInventory build() {
         final int totalItems = this.paginationItems.size();
-        final int itemsPerPage = this.pageSize == -1 ? this.pagedSlotRange.size() : this.pageSize;
-        final int totalPages = (totalItems + (itemsPerPage - 1)) / itemsPerPage;
+        final int itemsPerPage = this.pageSize == -1
+                ? this.pagedSlotRange.size()
+                : this.pageSize;
+
+        final int totalPages = itemsPerPage <= 0
+                ? 0
+                : (totalItems + (itemsPerPage - 1)) / itemsPerPage;
+
         final List<Page> pages = new ArrayList<>(totalPages);
 
         for (int currentPageId = 0; currentPageId < totalPages; currentPageId++) {

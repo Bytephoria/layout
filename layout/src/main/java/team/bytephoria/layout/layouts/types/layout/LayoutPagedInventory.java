@@ -62,13 +62,16 @@ public final class LayoutPagedInventory extends LayoutInventoryBase {
 
     @Override
     protected void renderItems() {
-        this.currentPage().renderTo(this, this.pagedSlotRange);
+        if (!this.pages.isEmpty()) {
+            this.currentPage().renderTo(this, this.pagedSlotRange);
+        }
+
         this.pagedNavigation.render(this);
         super.renderItems();
     }
 
     public void nextPage() {
-        if (this.isLastPage()) {
+        if (this.isEmpty() || this.isLastPage()) {
             return;
         }
 
@@ -78,13 +81,17 @@ public final class LayoutPagedInventory extends LayoutInventoryBase {
     }
 
     public void previousPage() {
-        if (this.isFirstPage()) {
+        if (this.isEmpty() || this.isFirstPage()) {
             return;
         }
 
         this.currentPage--;
         this.currentPage().renderTo(this, this.pagedSlotRange);
         this.pagedNavigation.render(this);
+    }
+
+    public boolean isEmpty() {
+        return this.totalPages() == 0;
     }
 
     private Page currentPage() {
