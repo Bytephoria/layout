@@ -52,7 +52,7 @@ public final class LayoutPagedInventory extends LayoutInventoryBase {
         final int clickedSlot = inventoryClickContext.clickEvent().getSlot();
         final int areaPosition = Arrays.binarySearch(this.pagedSlotRange.slots(), clickedSlot);
         final boolean isPaginationItem = areaPosition > -1;
-        final ItemLayout itemLayout = isPaginationItem ? this.itemPage(areaPosition) :
+        final ItemLayout itemLayout = (isPaginationItem && !this.isEmpty()) ? this.itemPage(areaPosition) :
                 this.itemLayouts.get(clickedSlot);
 
         if (itemLayout instanceof Executable executable) {
